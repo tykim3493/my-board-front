@@ -67,7 +67,7 @@ function ListPage() {
                 setTotalArticles(totalArticles);
                 setTotalPages(totalPages);
             })
-        axios.get('http://localhost:3000/board/category/load') // 카테고리
+        axios.get('http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/board/category/load', {withCredentials: true}) // 카테고리
             .then((response) => {
                 setCategories(response.data);
             })

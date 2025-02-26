@@ -23,7 +23,8 @@ function ViewPage() {
     useEffect(() => {
     const token = localStorage.getItem('token'); // 저장된 토큰 가져오기
     if (token) {
-        axios.get("http://localhost:3000/members", {
+        axios.get("http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/members", {
+            withCredentials: true,
             headers: { Authorization: `Bearer ${token}` }, // 헤더에 토큰 포함
         })
         .then((res) => {
@@ -34,13 +35,13 @@ function ViewPage() {
 
     // 서버 데이터 렌더링
     useEffect(() => {
-        axios.get(`http://localhost:3000/board/${id}`)
+        axios.get(`http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/board/${id}`, {withCredentials: true})
         .then((response) => {
             setArticle(response.data.article);
             setFile(response.data.file);
             setCommentLength(response.data.comment);
         })
-        axios.get(`http://localhost:3000/board/comment/${id}`)
+        axios.get(`http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/board/comment/${id}`)
         .then((response) => {
             setComments(response.data);
         })
@@ -49,7 +50,7 @@ function ViewPage() {
     // 게시물 삭제 버튼
     const deleteArticles = () => {
         if (window.confirm("게시물을 삭제하시겠습니까?")) {
-            axios.delete(`http://localhost:3000/board/${id}`)
+            axios.delete(`http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/board/${id}`)
                 .then(() => {
                     window.location.href = '/';
                 })

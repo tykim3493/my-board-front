@@ -26,6 +26,7 @@ function ListPage() {
         const token = localStorage.getItem('token'); // 저장된 토큰 가져오기
         if (token) {
             axios.get("http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/members", {
+                withCredentials: true, // 쿠키 cors 통신 설정
                 headers: { Authorization: `Bearer ${token}` }, // 헤더에 토큰 포함
             })
             .then((res) => {
@@ -48,13 +49,13 @@ function ListPage() {
         const limit = 7;
         let url = "";
         if (selectedCategory) {
-            url = `http://localhost:3000/board/category?query=${selectedCategory}&page=${currentPage}&limit=${limit}`; // 카테고리
+            url = `http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/board/category?query=${selectedCategory}&page=${currentPage}&limit=${limit}`; // 카테고리
         } else if (searchText) {
-            url = `http://localhost:3000/board/search?query=${searchText}&page=${currentPage}&limit=${limit}`; // 검색
+            url = `http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/board/search?query=${searchText}&page=${currentPage}&limit=${limit}`; // 검색
         } else {
-            url = `http://localhost:3000/board?page=${currentPage}&limit=${limit}`; // 일반
+            url = `http://ec2-13-208-240-232.ap-northeast-3.compute.amazonaws.com:3000/board?page=${currentPage}&limit=${limit}`; // 일반
         }
-        axios.get(url)
+        axios.get(url, {withCredentials: true})
             .then((response) => {
                 const serverArticles = response.data.data.map((article) => ({ // 게시글
                     ...article,
